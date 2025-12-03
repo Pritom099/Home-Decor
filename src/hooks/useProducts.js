@@ -17,4 +17,4 @@ const useProducts = () =>{
     return { products, loading, error }
 }
 
-export default useProducts
+export default useProducts 
