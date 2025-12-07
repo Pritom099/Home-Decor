@@ -4,11 +4,27 @@ import useProducts from '../hooks/useProducts';
 
 const ProductDetails = () => {
     const { id } = useParams()
-    const { products, loading, error } = useProducts()
+    const { products, loading} = useProducts()
     const product = products.find(p => String(p.id) === id)
     if(loading) return <p>Loading...</p>
-    const{name, image, price, category, description} = product
+    const{name, image, price, category, description} = product || 
+    {}
 
+    const handleAddToWishList = () => {
+        const existingList = JSON.parse(localStorage.getItem("wishlist"))
+        let updatedList = []
+        if(existingList){
+            const isDuplicate = existingList.some(p => p.id === product.id)
+            if(isDuplicate){
+                return alert('Sorry, this is alreadr here!!!')
+            }
+            updatedList = [...existingList, product]
+        }
+        else{
+            updatedList.push(product);
+        }
+        localStorage.setItem("wishlist",JSON.stringify(updatedList))
+    }
     return (
         <div className="card bg-base-100 border shadow-sm">
             <figure className='h-84 overflow-hidden'>
@@ -22,7 +38,7 @@ const ProductDetails = () => {
                 <p>Category: {category}</p>
                 <p>Price: ${price}</p>
                 <div className="card-actions justify-end">
-                    <button  className="btn btn-outline">Add to Wishlist</button>
+                    <button onClick={handleAddToWishList} className="btn btn-outline">Add to Wishlist</button>
                 </div>
             </div>
         </div>
