@@ -1,1 +1,1 @@
-https://aesthetic-home-decor-694258.netlify.app/products
+https://aesthetic-home-decor-694258.netlify.app
