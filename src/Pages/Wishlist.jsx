@@ -9,6 +9,8 @@ const Wishlist = () => {
         if (savedList) setWishlist(savedList)
     }, [])
 
+    if(!wishlist.length) return <p className='text-3xl font-semibold'>No Data Available</p>
+
     const sortedItem = (() => {
         if (sortOrder === 'price-asc') {
             return [...wishlist].sort((a, b) => a.price - b.price)
@@ -31,7 +33,16 @@ const Wishlist = () => {
         localStorage.setItem("wishlist", JSON.stringify(updatedList))
     }
 
-    
+    const totalsByCategory = {}
+    wishlist.forEach(product => {
+        const category = product.category
+        totalsByCategory[category] = (totalsByCategory[category] || 0) + product.price
+    })
+    const chartData = Object.keys(totalsByCategory).map(category => ({
+        category,
+        total : totalsByCategory[category],
+    }))
+
 
     return (
         <div className='space-y-6'>
@@ -73,13 +84,13 @@ const Wishlist = () => {
                 <h3 className='text-xl font-semibold'>Wishlist Summery</h3>
                 <div className='bg-base-100 border rounded-xl p-4 h-80'>
                     <ResponsiveContainer width='100%' height='100%'>
-                        <BarChart data={wishlist} >
+                        <BarChart data={chartData} >
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="category" />
                             <YAxis width="auto" />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="price" fill="#82ca9d" p />
+                            <Bar dataKey="total" fill="#82ca9d" p />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>
