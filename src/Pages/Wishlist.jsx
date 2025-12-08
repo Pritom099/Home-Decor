@@ -5,7 +5,7 @@ const Wishlist = () => {
     const [wishlist, setWishlist] = useState([])
     const [sortOrder, setSortOrder] = useState('none')
     useEffect(() => {
-        const savedList = JSON.parse(localStorage.getItem('wishlist'))
+        const savedList = JSON.parse(localStorage.getItem('wishlist')) 
         if (savedList) setWishlist(savedList)
     }, [])
 
@@ -90,7 +90,7 @@ const Wishlist = () => {
                             <YAxis width="auto" />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="total" fill="#82ca9d" p />
+                            <Bar dataKey="total" fill="#82ca9d" />
                         </BarChart>
                     </ResponsiveContainer>
                 </div>

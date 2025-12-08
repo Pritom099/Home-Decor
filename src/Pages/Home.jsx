@@ -7,7 +7,7 @@ import LoadingSpinner from '../Components/LoadingSpinner';
 const Home = () => {
 
     // console.log(products)
-    const { products, loading, error } = useProducts()
+    const { products, loading } = useProducts()
     console.log(products)
     const featuredProducts = products.slice(0, 6);
     return (
